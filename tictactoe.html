@@ -1,0 +1,2437 @@
+<html>
+ <head>
+   <title>Tic-Tac-Toe</title>
+    <link rel="shortcut icon"  type="image/x-icon" href="i.ico">
+   <style>
+     .i{font-size:50;width:120;height:100;font-style:bold;font-family:Segoe Script}
+     .x{font-size:30;color:white;background:black;font-family:forte}
+     .c{font-size:0;color:white;background:white}
+     body{background:url("d.jpg")fixed;background-size:1700px 768px;color:white;font-family:forte;resize:none}
+   </style>
+ </head>
+ <body onload="reset1();" style="overflow:hidden;"><audio src="doorbell.wav" autoplay></audio>
+ <marquee onmouseover="stop();" onmouseout="start();" behavior=alternate scrolldelay=10 scrollamount=4 bgcolor=white height=30><font size=5 color=maroon>Design and Developed by:Saroj ku. sundara & Tested by:Aditya lenka</font></marquee>
+  <font size=6><u><center>-:Welcome to Tic-Tac-Toe Game (Christmas Edition):-</center></u></font>
+  <form name=f1 align=center><font size=6><input class=c type=text  name="c1" readonly>
+ <input type=radio name=r1  value="X" id=rad1 >X |<input type=radio name=r1 value="O" id=rad2>O<br>
+  <input type=radio name=r2  value="PAC" id=pac>Play aginst computer|<input type=radio name=r2 value="PAH" id=pah onclick="con();">Play against human<br> 
+  You(P1)|Opponent(P2)|Draw</font><br> 
+  <input type=text name="t1" size=16 readonly value="0">       <input type=text name=t2 size=25 readonly value="0">       <input type=text name=t3 size=10 readonly value="0"></form>                      
+           <table border=5 align=center height=300 width=300 cellspacing=2 bordercolor=blue>
+             <tr><form name=f3>
+               <td><input class=i type=text id="ta1" onfocus="xo1();" readonly><td><input class=i type=text id="ta2" onfocus="xo2();" readonly> <b id="b"></b>  <td><input class=i type=text id="ta3" onfocus="xo3();" readonly><b id="c"></b>
+             </tr>
+            <tr>
+              <td><input class=i type=text id="ta4" onfocus="xo4();" readonly><b id="d"></b>  <td><input class=i type=text id="ta5" onfocus="xo5();" readonly><b id="e"></b>  <td><input class=i type=text id="ta6" onfocus="xo6();" readonly><b id="f"></b>
+            </tr>
+           <tr>
+             <td><input class=i type=text id="ta7" onfocus="xo7();" readonly><b id="g"></b> <td><input class=i type=text id="ta8" onfocus="xo8();" readonly><b id="h"></b>  <td><input class=i type=text id="ta9" onfocus="xo9();" readonly><b id="i"></b></form>
+           </tr>
+         </table><pre>
+          <form name="f2" ><font size=6>                               <input class=x type=button name=b1 value="Continue" onclick="reset2();">       <input class=x type=button name=b2 value="Start New" onclick="reset1();"></form>
+   <script language="javascript">
+    function con()
+      {
+      var len,i,val;
+      len=document.f1.r1.length;
+          for(i=0;i<len;i++)
+           {
+             if(document.f1.r1[i].checked==true)
+              {
+                 val=document.f1.r1[i].value;
+              }
+           }
+        document.f1.c1.value=val;
+      }
+     function xo1()
+       {
+          var len,len1,i,j,x,o,pac,pah,val,val1,ai=0,ai1=0;
+          x='X';
+          o='O';
+          pac="PAC";
+          pah="PAH";
+          len=document.f1.r1.length;
+          len1=document.f1.r2.length;
+          for(i=0;i<len;i++)
+           {
+             if(document.f1.r1[i].checked==true)
+              {
+                var val=document.f1.r1[i].value;
+                document.getElementById("rad1").disabled=true;
+                document.getElementById("rad2").disabled=true;
+                 break;
+              }
+            }  
+              for(j=0;j<len1;j++)
+               {
+                 if(document.f1.r2[j].checked==true)
+                  {
+                     var val1=document.f1.r2[j].value;
+                     document.getElementById("pac").disabled=true;
+                     document.getElementById("pah").disabled=true;
+                     break;
+                  }
+               }  
+               
+               ai1=AI3();
+                var v=document.f3.ta1.value;
+                  if((v=="")&&(ai1==false))
+                   {
+                   if((val==x) && (val1==pac))
+                    {
+                      document.getElementById("ta1").style.color="red";  
+                      document.f3.ta1.value="X";
+                      ai=AI();
+                      if(ai==false)
+                         AI1();
+                      draw();
+                    }               
+                  else if((val==o) && (val1==pac))
+                      { 
+                        document.getElementById("ta1").style.color="green";  
+                        document.f3.ta1.value="O";
+                        ai=AI();
+                         if(ai==false)
+                           AI1();
+                         draw();
+                       } 
+                 else if((val==x) && (val1==pah))
+                      { 
+                        document.getElementById("ta1").style.color="red";  
+                        document.f3.ta1.value="X";
+                         ai=AI();
+                        draw();
+                        document.f1.r1.value="O";
+                       } 
+                else if((val==o) && (val1==pah))
+                      { 
+                        document.getElementById("ta1").style.color="green";  
+                        document.f3.ta1.value="O";
+                        ai=AI();
+                         draw();
+                       document.f1.r1.value="X";
+                       } 
+                  }    	
+             }
+      function xo2()
+       {
+          var len,len1,i,j,x,o,pac,pah,val,val1,ai=0,ai1=0;
+          x='X';
+          o='O';
+          pac="PAC";
+          pah="PAH";
+          len=document.f1.r1.length;
+          len1=document.f1.r2.length;
+          for(i=0;i<len;i++)
+           {
+             if(document.f1.r1[i].checked==true)
+              {
+                var val=document.f1.r1[i].value;
+                document.getElementById("rad1").disabled=true;
+                document.getElementById("rad2").disabled=true;
+                 break;
+              }
+            }  
+              for(j=0;j<len1;j++)
+               {
+                 if(document.f1.r2[j].checked==true)
+                  {
+                     var val1=document.f1.r2[j].value;
+                     document.getElementById("pac").disabled=true;
+                     document.getElementById("pah").disabled=true;
+                     break;
+                  }
+               }  
+               
+               ai1=AI3();
+                var v=document.f3.ta2.value;
+                  if((v=="")&&(ai1==false))
+                   {
+                   if((val==x) && (val1==pac))
+                    {
+                      document.getElementById("ta2").style.color="red";  
+                      document.f3.ta2.value="X";
+                      ai=AI();
+                      if(ai==false)
+                         AI1();
+                      draw();
+                    }               
+                  else if((val==o) && (val1==pac))
+                      { 
+                        document.getElementById("ta2").style.color="green";  
+                        document.f3.ta2.value="O";
+                        ai=AI();
+                         if(ai==false)
+                           AI1();
+                         draw();
+                       } 
+                 else if((val==x) && (val1==pah))
+                      { 
+                        document.getElementById("ta2").style.color="red";  
+                        document.f3.ta2.value="X";
+                         ai=AI();
+                        draw();
+                        document.f1.r1.value="O";
+                       } 
+                else if((val==o) && (val1==pah))
+                      { 
+                        document.getElementById("ta2").style.color="green";  
+                        document.f3.ta2.value="O";
+                        ai=AI();
+                         draw();
+                        document.f1.r1.value="X";
+                       } 
+                  }    	
+             }
+       function xo3()
+       {
+          var len,len1,i,j,x,o,pac,pah,val,val1,ai=0,ai1=0;
+          x='X';
+          o='O';
+          pac="PAC";
+          pah="PAH";
+          len=document.f1.r1.length;
+          len1=document.f1.r2.length;
+          for(i=0;i<len;i++)
+           {
+             if(document.f1.r1[i].checked==true)
+              {
+                var val=document.f1.r1[i].value;
+                document.getElementById("rad1").disabled=true;
+                document.getElementById("rad2").disabled=true;
+                 break;
+              }
+            }  
+              for(j=0;j<len1;j++)
+               {
+                 if(document.f1.r2[j].checked==true)
+                  {
+                     var val1=document.f1.r2[j].value;
+                     document.getElementById("pac").disabled=true;
+                     document.getElementById("pah").disabled=true;
+                     break;
+                  }
+               }  
+               
+               ai1=AI3();
+                var v=document.f3.ta3.value;
+                  if((v=="")&&(ai1==false))
+                   {
+                   if((val==x) && (val1==pac))
+                    {
+                      document.getElementById("ta3").style.color="red";  
+                      document.f3.ta3.value="X";
+                      ai=AI();
+                      if(ai==false)
+                         AI1();
+                      draw();
+                    }               
+                  else if((val==o) && (val1==pac))
+                      { 
+                        document.getElementById("ta3").style.color="green";  
+                        document.f3.ta3.value="O";
+                        ai=AI();
+                         if(ai==false)
+                           AI1();
+                         draw();
+                       } 
+                 else if((val==x) && (val1==pah))
+                      { 
+                        document.getElementById("ta3").style.color="red";  
+                        document.f3.ta3.value="X";
+                         ai=AI();
+                        draw();
+                         document.f1.r1.value="O";
+                       } 
+                else if((val==o) && (val1==pah))
+                      { 
+                        document.getElementById("ta3").style.color="green";  
+                        document.f3.ta3.value="O";
+                        ai=AI();
+                         draw();
+                        document.f1.r1.value="X";
+                       } 
+                  }    	
+             }
+      function xo4()
+       {
+          var len,len1,i,j,x,o,pac,pah,val,val1,ai=0,ai1=0;
+          x='X';
+          o='O';
+          pac="PAC";
+          pah="PAH";
+          len=document.f1.r1.length;
+          len1=document.f1.r2.length;
+          for(i=0;i<len;i++)
+           {
+             if(document.f1.r1[i].checked==true)
+              {
+                var val=document.f1.r1[i].value;
+                document.getElementById("rad1").disabled=true;
+                document.getElementById("rad2").disabled=true;
+                 break;
+              }
+            }  
+              for(j=0;j<len1;j++)
+               {
+                 if(document.f1.r2[j].checked==true)
+                  {
+                     var val1=document.f1.r2[j].value;
+                     document.getElementById("pac").disabled=true;
+                     document.getElementById("pah").disabled=true;
+                     break;
+                  }
+               }  
+               
+               ai1=AI3();
+                var v=document.f3.ta4.value;
+                  if((v=="")&&(ai1==false))
+                   {
+                   if((val==x) && (val1==pac))
+                    {
+                      document.getElementById("ta4").style.color="red";  
+                      document.f3.ta4.value="X";
+                      ai=AI();
+                      if(ai==false)
+                         AI1();
+                      draw();
+                    }               
+                  else if((val==o) && (val1==pac))
+                      { 
+                        document.getElementById("ta4").style.color="green";  
+                        document.f3.ta4.value="O";
+                        ai=AI();
+                         if(ai==false)
+                           AI1();
+                         draw();
+                       } 
+                 else if((val==x) && (val1==pah))
+                      { 
+                        document.getElementById("ta4").style.color="red";  
+                        document.f3.ta4.value="X";
+                         ai=AI();
+                        draw();
+                        document.f1.r1.value="O";
+                       } 
+                else if((val==o) && (val1==pah))
+                      { 
+                        document.getElementById("ta4").style.color="green";  
+                        document.f3.ta4.value="O";
+                        ai=AI();
+                         draw();
+                        document.f1.r1.value="X";
+                       } 
+                  }    	
+             }
+       function xo5()
+       {
+          var len,len1,i,j,x,o,pac,pah,val,val1,ai=0,ai1=0;
+          x='X';
+          o='O';
+          pac="PAC";
+          pah="PAH";
+          len=document.f1.r1.length;
+          len1=document.f1.r2.length;
+          for(i=0;i<len;i++)
+           {
+             if(document.f1.r1[i].checked==true)
+              {
+                var val=document.f1.r1[i].value;
+                document.getElementById("rad1").disabled=true;
+                document.getElementById("rad2").disabled=true;
+                 break;
+              }
+            }  
+              for(j=0;j<len1;j++)
+               {
+                 if(document.f1.r2[j].checked==true)
+                  {
+                     var val1=document.f1.r2[j].value;
+                     document.getElementById("pac").disabled=true;
+                     document.getElementById("pah").disabled=true;
+                     break;
+                  }
+               }  
+               
+               ai1=AI3();
+                var v=document.f3.ta5.value;
+                  if((v=="")&&(ai1==false))
+                   {
+                   if((val==x) && (val1==pac))
+                    {
+                      document.getElementById("ta5").style.color="red";  
+                      document.f3.ta5.value="X";
+                      ai=AI();
+                      if(ai==false)
+                         AI1();
+                      draw();
+                    }               
+                  else if((val==o) && (val1==pac))
+                      { 
+                        document.getElementById("ta5").style.color="green";  
+                        document.f3.ta5.value="O";
+                        ai=AI();
+                         if(ai==false)
+                           AI1();
+                         draw();
+                       } 
+                 else if((val==x) && (val1==pah))
+                      { 
+                        document.getElementById("ta5").style.color="red";  
+                        document.f3.ta5.value="X";
+                         ai=AI();
+                        draw();
+                       document.f1.r1.value="O";
+                       } 
+                else if((val==o) && (val1==pah))
+                      { 
+                        document.getElementById("ta5").style.color="green";  
+                        document.f3.ta5.value="O";
+                        ai=AI();
+                         draw(); 
+                       document.f1.r1.value="X";
+                       } 
+                  }    	
+             }
+       function xo6()
+       {
+          var len,len1,i,j,x,o,pac,pah,val,val1,ai=0,ai1=0;
+          x='X';
+          o='O';
+          pac="PAC";
+          pah="PAH";
+          len=document.f1.r1.length;
+          len1=document.f1.r2.length;
+          for(i=0;i<len;i++)
+           {
+             if(document.f1.r1[i].checked==true)
+              {
+                var val=document.f1.r1[i].value;
+                document.getElementById("rad1").disabled=true;
+                document.getElementById("rad2").disabled=true;
+                 break;
+              }
+            }  
+              for(j=0;j<len1;j++)
+               {
+                 if(document.f1.r2[j].checked==true)
+                  {
+                     var val1=document.f1.r2[j].value;
+                     document.getElementById("pac").disabled=true;
+                     document.getElementById("pah").disabled=true;
+                     break;
+                  }
+               }  
+               
+               ai1=AI3();
+                var v=document.f3.ta6.value;
+                  if((v=="")&&(ai1==false))
+                   {
+                   if((val==x) && (val1==pac))
+                    {
+                      document.getElementById("ta6").style.color="red";  
+                      document.f3.ta6.value="X";
+                      ai=AI();
+                      if(ai==false)
+                         AI1();
+                      draw();
+                    }               
+                  else if((val==o) && (val1==pac))
+                      { 
+                        document.getElementById("ta6").style.color="green";  
+                        document.f3.ta6.value="O";
+                        ai=AI();
+                         if(ai==false)
+                           AI1();
+                         draw();
+                       } 
+                 else if((val==x) && (val1==pah))
+                      { 
+                        document.getElementById("ta6").style.color="red";  
+                        document.f3.ta6.value="X";
+                         ai=AI();
+                        draw();
+                         document.f1.r1.value="O";
+                       } 
+                else if((val==o) && (val1==pah))
+                      { 
+                        document.getElementById("ta6").style.color="green";  
+                        document.f3.ta6.value="O";
+                        ai=AI();
+                         draw();
+                        document.f1.r1.value="X";
+                       } 
+                  }    	
+             }
+      function xo7()
+       {
+          var len,len1,i,j,x,o,pac,pah,val,val1,ai=0,ai1=0;
+          x='X';
+          o='O';
+          pac="PAC";
+          pah="PAH";
+          len=document.f1.r1.length;
+          len1=document.f1.r2.length;
+          for(i=0;i<len;i++)
+           {
+             if(document.f1.r1[i].checked==true)
+              {
+                var val=document.f1.r1[i].value;
+                document.getElementById("rad1").disabled=true;
+                document.getElementById("rad2").disabled=true;
+                 break;
+              }
+            }  
+              for(j=0;j<len1;j++)
+               {
+                 if(document.f1.r2[j].checked==true)
+                  {
+                     var val1=document.f1.r2[j].value;
+                     document.getElementById("pac").disabled=true;
+                     document.getElementById("pah").disabled=true;
+                     break;
+                  }
+               }  
+               
+               ai1=AI3();
+                var v=document.f3.ta7.value;
+                  if((v=="")&&(ai1==false))
+                   {
+                   if((val==x) && (val1==pac))
+                    {
+                      document.getElementById("ta7").style.color="red";  
+                      document.f3.ta7.value="X";
+                      ai=AI();
+                      if(ai==false)
+                         AI1();
+                      draw();
+                    }               
+                  else if((val==o) && (val1==pac))
+                      { 
+                        document.getElementById("ta7").style.color="green";  
+                        document.f3.ta7.value="O";
+                        ai=AI();
+                         if(ai==false)
+                           AI1();
+                         draw();
+                       } 
+                 else if((val==x) && (val1==pah))
+                      { 
+                        document.getElementById("ta7").style.color="red";  
+                        document.f3.ta7.value="X";
+                         ai=AI();
+                        draw();
+                         document.f1.r1.value="O";
+                       } 
+                else if((val==o) && (val1==pah))
+                      { 
+                        document.getElementById("ta7").style.color="green";  
+                        document.f3.ta7.value="O";
+                        ai=AI();
+                         draw();
+                        document.f1.r1.value="X";
+                       } 
+                  }    	
+             }
+       function xo8()
+       {
+          var len,len1,i,j,x,o,pac,pah,val,val1,ai=0,ai1=0;
+          x='X';
+          o='O';
+          pac="PAC";
+          pah="PAH";
+          len=document.f1.r1.length;
+          len1=document.f1.r2.length;
+          for(i=0;i<len;i++)
+           {
+             if(document.f1.r1[i].checked==true)
+              {
+                var val=document.f1.r1[i].value;
+                document.getElementById("rad1").disabled=true;
+                document.getElementById("rad2").disabled=true;
+                 break;
+              }
+            }  
+              for(j=0;j<len1;j++)
+               {
+                 if(document.f1.r2[j].checked==true)
+                  {
+                     var val1=document.f1.r2[j].value;
+                     document.getElementById("pac").disabled=true;
+                     document.getElementById("pah").disabled=true;
+                     break;
+                  }
+               }  
+               
+               ai1=AI3();
+                var v=document.f3.ta8.value;
+                  if((v=="")&&(ai1==false))
+                   {
+                   if((val==x) && (val1==pac))
+                    {
+                      document.getElementById("ta8").style.color="red";  
+                      document.f3.ta8.value="X";
+                      ai=AI();
+                      if(ai==false)
+                         AI1();
+                      draw();
+                    }               
+                  else if((val==o) && (val1==pac))
+                      { 
+                        document.getElementById("ta8").style.color="green";  
+                        document.f3.ta8.value="O";
+                        ai=AI();
+                         if(ai==false)
+                           AI1();
+                         draw();
+                       } 
+                 else if((val==x) && (val1==pah))
+                      { 
+                        document.getElementById("ta8").style.color="red";  
+                        document.f3.ta8.value="X";
+                         ai=AI();
+                        draw();
+                        document.f1.r1.value="O";
+                       } 
+                else if((val==o) && (val1==pah))
+                      { 
+                        document.getElementById("ta8").style.color="green";  
+                        document.f3.ta8.value="O";
+                        ai=AI();
+                         draw(); 
+                        document.f1.r1.value="X";
+                       } 
+                  }    	
+             }
+       function xo9()
+      {
+          var len,len1,i,j,x,o,pac,pah,val,val1,ai=0,ai1=0;
+          x='X';
+          o='O';
+          pac="PAC";
+          pah="PAH";
+          len=document.f1.r1.length;
+          len1=document.f1.r2.length;
+          for(i=0;i<len;i++)
+           {
+             if(document.f1.r1[i].checked==true)
+              {
+                var val=document.f1.r1[i].value;
+                document.getElementById("rad1").disabled=true;
+                document.getElementById("rad2").disabled=true;
+                 break;
+              }
+            }  
+              for(j=0;j<len1;j++)
+               {
+                 if(document.f1.r2[j].checked==true)
+                  {
+                     var val1=document.f1.r2[j].value;
+                     document.getElementById("pac").disabled=true;
+                     document.getElementById("pah").disabled=true;
+                     break;
+                  }
+               }  
+               
+               ai1=AI3();
+                var v=document.f3.ta9.value;
+                  if((v=="")&&(ai1==false))
+                   {
+                   if((val==x) && (val1==pac))
+                    {
+                      document.getElementById("ta9").style.color="red";  
+                      document.f3.ta9.value="X";
+                      ai=AI();
+                      if(ai==false)
+                         AI1();
+                      draw();
+                    }               
+                  else if((val==o) && (val1==pac))
+                      { 
+                        document.getElementById("ta9").style.color="green";  
+                        document.f3.ta9.value="O";
+                        ai=AI();
+                         if(ai==false)
+                           AI1();
+                         draw();
+                       } 
+                 else if((val==x) && (val1==pah))
+                      { 
+                        document.getElementById("ta9").style.color="red";  
+                        document.f3.ta9.value="X";
+                         ai=AI();
+                        draw();
+                        document.f1.r1.value="O";
+                       } 
+                else if((val==o) && (val1==pah))
+                      { 
+                        document.getElementById("ta9").style.color="green";  
+                        document.f3.ta9.value="O";
+                        ai=AI();
+                         draw();
+                         document.f1.r1.value="X";
+                       } 
+                  }    	
+             }
+     
+         function AI()
+            {
+               var a,b,c,d,e,f,g,h,ii,y=0;
+                 a=document.f3.ta1.value;
+                 b=document.f3.ta2.value;
+                 c=document.f3.ta3.value;
+                 d=document.f3.ta4.value;
+                 e=document.f3.ta5.value;
+                 f=document.f3.ta6.value;
+                 g=document.f3.ta7.value;
+                 h=document.f3.ta8.value;
+                 ii=document.f3.ta9.value;
+                 cc=document.f1.c1.value;
+               var len,len1,pac,pah,i,j,x,o,val,val1;
+                x='X';
+                o='O';
+                pac="PAC";
+                pah="PAH";
+                len=document.f1.r1.length; 
+                len1=document.f1.r2.length;
+                for(i=0;i<len;i++)
+                  {
+                        if(document.f1.r1[i].checked==true)
+                          {
+                            var val=document.f1.r1[i].value;
+                            break;
+                          }
+                 }
+               for(j=0;j<len1;j++)
+                  {
+                    if(document.f1.r2[j].checked==true)
+                      {
+                        var val1=document.f1.r2[j].value;
+                        break;
+                      }
+                 }
+                
+              if((val==x)&&(val1==pac))
+                {
+                  if((a==x)&&(b==x)&&(c==x))
+                    {
+                      var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                      document.getElementById("ta1").style.backgroundColor="red";
+                      document.getElementById("ta2").style.backgroundColor="red";
+                      document.getElementById("ta3").style.backgroundColor="red";
+                      alert("You win");
+                    }
+                else if((c==x)&&(f==x)&&(ii==x))
+                    {
+                      var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                      document.getElementById("ta3").style.backgroundColor="red";
+                      document.getElementById("ta6").style.backgroundColor="red";
+                      document.getElementById("ta9").style.backgroundColor="red";
+                      alert("You win");
+                    }
+               else if((g==x)&&(h==x)&&(ii==x))
+                    { 
+                      var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                      document.getElementById("ta7").style.backgroundColor="red";
+                      document.getElementById("ta8").style.backgroundColor="red";
+                      document.getElementById("ta9").style.backgroundColor="red";
+                      alert("You win");
+                    }
+               else if((a==x)&&(d==x)&&(g==x))
+                    {
+                      var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                      document.getElementById("ta1").style.backgroundColor="red";
+                      document.getElementById("ta4").style.backgroundColor="red";
+                      document.getElementById("ta7").style.backgroundColor="red";
+                      alert("You win");
+                    }
+               else if((a==x)&&(e==x)&&(ii==x))
+                    {
+                      var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                      document.getElementById("ta1").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta9").style.backgroundColor="red";
+                      alert("You win");
+                    }
+               else if((c==x)&&(e==x)&&(g==x))
+                    {
+                      var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                      document.getElementById("ta3").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta7").style.backgroundColor="red";
+                      alert("You win");
+                    }
+               else if((d==x)&&(e==x)&&(f==x))
+                    {
+                       sum=sum+1;
+                      document.f1.t1.value=sum;
+                      document.getElementById("ta4").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta6").style.backgroundColor="red";
+                      alert("You win");
+                    }
+               else if((b==x)&&(e==x)&&(h==x))
+                    {
+                      var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                      document.getElementById("ta2").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta8").style.backgroundColor="red";
+                      alert("You win");
+                    }
+               else if((a==o)&&(b==o)&&(c==o))
+                    {
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                      document.getElementById("ta1").style.backgroundColor="green";
+                      document.getElementById("ta2").style.backgroundColor="green";
+                      document.getElementById("ta3").style.backgroundColor="green";
+                      alert("COMP win");
+                    }
+                else if((c==o)&&(f==o)&&(ii==o))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                       document.getElementById("ta3").style.backgroundColor="green";
+                      document.getElementById("ta6").style.backgroundColor="green";
+                      document.getElementById("ta9").style.backgroundColor="green";
+                      alert("COMP win");
+                    }
+               else if((g==o)&&(h==o)&&(ii==o))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                        document.getElementById("ta7").style.backgroundColor="green";
+                      document.getElementById("ta8").style.backgroundColor="green";
+                      document.getElementById("ta9").style.backgroundColor="green";
+                      alert("COMP win");
+                    }
+               else if((a==o)&&(d==o)&&(g==o))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                       document.getElementById("ta1").style.backgroundColor="green";
+                      document.getElementById("ta4").style.backgroundColor="green";
+                      document.getElementById("ta7").style.backgroundColor="green";
+                      alert("COMP win");
+                    }
+               else if((a==o)&&(e==o)&&(ii==o))
+                    {
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                        document.getElementById("ta1").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta9").style.backgroundColor="green";
+                      alert("COMP win");
+                    }
+               else if((c==o)&&(e==o)&&(g==o))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                        document.getElementById("ta3").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta7").style.backgroundColor="green";
+                      alert("COMP win");
+                    }
+               else if((d==o)&&(e==o)&&(f==o))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                        document.getElementById("ta4").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta6").style.backgroundColor="green";
+                      alert("COMP win");
+                    }
+               else if((b==o)&&(e==o)&&(h==o))
+                    {
+                        var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                        document.getElementById("ta2").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta8").style.backgroundColor="green";
+                      alert("COMP win");
+                    }
+                 else
+                   {
+                     y=1;
+                    }
+              }
+            else if((val==o)&&(val1==pac))
+                 {
+                    if((a==x)&&(b==x)&&(c==x))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                       document.getElementById("ta1").style.backgroundColor="red";
+                      document.getElementById("ta2").style.backgroundColor="red";
+                      document.getElementById("ta3").style.backgroundColor="red";
+                      alert("COMP win");
+                    }
+                else if((c==x)&&(f==x)&&(ii==x))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                        document.getElementById("ta3").style.backgroundColor="red";
+                      document.getElementById("ta6").style.backgroundColor="red";
+                      document.getElementById("ta9").style.backgroundColor="red";
+                      alert("COMP win");
+                    }
+               else if((g==x)&&(h==x)&&(ii==x))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                        document.getElementById("ta7").style.backgroundColor="red";
+                      document.getElementById("ta8").style.backgroundColor="red";
+                      document.getElementById("ta9").style.backgroundColor="red";
+                      alert("COMP win");
+                    }
+               else if((a==x)&&(d==x)&&(g==x))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                        document.getElementById("ta1").style.backgroundColor="red";
+                      document.getElementById("ta4").style.backgroundColor="red";
+                      document.getElementById("ta7").style.backgroundColor="green";
+                      alert("COMP win");
+                    }
+               else if((a==x)&&(e==x)&&(ii==x))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                       document.getElementById("ta1").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta9").style.backgroundColor="red";
+                      alert("COMP win");
+                    }
+               else if((c==x)&&(e==x)&&(g==x))
+                    {
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                        document.getElementById("ta3").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta7").style.backgroundColor="red";
+                      alert("COMP win");
+                    }
+               else if((d==x)&&(e==x)&&(f==x))
+                    {
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                        document.getElementById("ta4").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta6").style.backgroundColor="red";
+                      alert("COMP win");
+                    }
+               else if((b==x)&&(e==x)&&(h==x))
+                    {
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                        document.getElementById("ta2").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta8").style.backgroundColor="red";
+                      alert("COMP win");
+                    }
+              else if((a==o)&&(b==o)&&(c==o))
+                    {
+                        var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                       document.getElementById("ta1").style.backgroundColor="green";
+                      document.getElementById("ta2").style.backgroundColor="green";
+                      document.getElementById("ta3").style.backgroundColor="green";
+                      alert("You win");
+                    }
+                else if((c==o)&&(f==o)&&(ii==o))
+                    {
+                        var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                       document.getElementById("ta3").style.backgroundColor="green";
+                      document.getElementById("ta6").style.backgroundColor="green";
+                      document.getElementById("ta9").style.backgroundColor="green";
+                      alert("You win");
+                    }
+               else if((g==o)&&(h==o)&&(ii==o))
+                    {
+                        var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                       document.getElementById("ta7").style.backgroundColor="green";
+                      document.getElementById("ta8").style.backgroundColor="green";
+                      document.getElementById("ta9").style.backgroundColor="green";
+                      alert("You win");
+                    }
+               else if((a==o)&&(d==o)&&(g==o))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                      document.getElementById("ta1").style.backgroundColor="green";
+                      document.getElementById("ta4").style.backgroundColor="green";
+                      document.getElementById("ta7").style.backgroundColor="green";
+                      alert("You win");
+                    }
+               else if((a==o)&&(e==o)&&(ii==o))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                      document.getElementById("ta1").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta9").style.backgroundColor="green";
+                      alert("You win");
+                    }
+               else if((c==o)&&(e==o)&&(g==o))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                       document.getElementById("ta3").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta7").style.backgroundColor="green";
+                      alert("You win");
+                    }
+               else if((d==o)&&(e==o)&&(f==o))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                       document.getElementById("ta4").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta6").style.backgroundColor="green";
+                      alert("You win");
+                    }
+               else if((b==o)&&(e==o)&&(h==o))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                       document.getElementById("ta2").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta8").style.backgroundColor="green";
+                      alert("You win");
+                    }
+                 else
+                   {
+                     y=1;
+                   }
+               }
+            else if((cc==x)&&(val1==pah))
+                 {
+                    if((a==x)&&(b==x)&&(c==x))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                       document.getElementById("ta1").style.backgroundColor="red";
+                      document.getElementById("ta2").style.backgroundColor="red";
+                      document.getElementById("ta3").style.backgroundColor="red";
+                      alert("player1 win");
+                    }
+                else if((c==x)&&(f==x)&&(ii==x))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                        document.getElementById("ta3").style.backgroundColor="red";
+                      document.getElementById("ta6").style.backgroundColor="red";
+                      document.getElementById("ta9").style.backgroundColor="red";
+                     alert("player1 win");
+                    }
+               else if((g==x)&&(h==x)&&(ii==x))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                        document.getElementById("ta7").style.backgroundColor="red";
+                      document.getElementById("ta8").style.backgroundColor="red";
+                      document.getElementById("ta9").style.backgroundColor="red";
+                      alert("player1 win");
+                    }
+               else if((a==x)&&(d==x)&&(g==x))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                        document.getElementById("ta1").style.backgroundColor="red";
+                      document.getElementById("ta4").style.backgroundColor="red";
+                      document.getElementById("ta7").style.backgroundColor="red";
+                      alert("player1 win");
+                    }
+               else if((a==x)&&(e==x)&&(ii==x))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                       document.getElementById("ta1").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta9").style.backgroundColor="red";
+                      alert("player1 win");
+                    }
+               else if((c==x)&&(e==x)&&(g==x))
+                    {
+                      var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                        document.getElementById("ta3").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta7").style.backgroundColor="red";
+                      alert("player1 win");
+                    }
+               else if((d==x)&&(e==x)&&(f==x))
+                    {
+                      var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                        document.getElementById("ta4").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta6").style.backgroundColor="red";
+                      alert("player1 win");
+                    }
+               else if((b==x)&&(e==x)&&(h==x))
+                    {
+                      var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                        document.getElementById("ta2").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta8").style.backgroundColor="red";
+                      alert("player1 win");
+                    }
+              else if((a==o)&&(b==o)&&(c==o))
+                    {
+                        var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                       document.getElementById("ta1").style.backgroundColor="green";
+                      document.getElementById("ta2").style.backgroundColor="green";
+                      document.getElementById("ta3").style.backgroundColor="green";
+                      alert("player2 win");
+                    }
+                else if((c==o)&&(f==o)&&(ii==o))
+                    {
+                        var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                       document.getElementById("ta3").style.backgroundColor="green";
+                      document.getElementById("ta6").style.backgroundColor="green";
+                      document.getElementById("ta9").style.backgroundColor="green";
+                      alert("player2 win");
+                    }
+               else if((g==o)&&(h==o)&&(ii==o))
+                    {
+                        var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                       document.getElementById("ta7").style.backgroundColor="green";
+                      document.getElementById("ta8").style.backgroundColor="green";
+                      document.getElementById("ta9").style.backgroundColor="green";
+                      alert("player2 win");
+                    }
+               else if((a==o)&&(d==o)&&(g==o))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                      document.getElementById("ta1").style.backgroundColor="green";
+                      document.getElementById("ta4").style.backgroundColor="green";
+                      document.getElementById("ta7").style.backgroundColor="green";
+                      alert("player2 win");
+                    }
+               else if((a==o)&&(e==o)&&(ii==o))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                      document.getElementById("ta1").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta9").style.backgroundColor="green";
+                      alert("player2 win");
+                    }
+               else if((c==o)&&(e==o)&&(g==o))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                       document.getElementById("ta3").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta7").style.backgroundColor="green";
+                      alert("player2 win");
+                    }
+               else if((d==o)&&(e==o)&&(f==o))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                       document.getElementById("ta4").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta6").style.backgroundColor="green";
+                      alert("player2 win");
+                    }
+               else if((b==o)&&(e==o)&&(h==o))
+                    {
+                       var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                       document.getElementById("ta2").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta8").style.backgroundColor="green";
+                      alert("player2 win");
+                    }
+                 else
+                   {
+                     y=1;
+                   }
+                }
+            else if((cc==o)&&(val1==pah))
+                {
+                  if((a==x)&&(b==x)&&(c==x))
+                    {
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                      document.getElementById("ta1").style.backgroundColor="red";
+                      document.getElementById("ta2").style.backgroundColor="red";
+                      document.getElementById("ta3").style.backgroundColor="red";
+                      alert("player2 win");
+                    }
+                else if((c==x)&&(f==x)&&(ii==x))
+                    {
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                      document.getElementById("ta3").style.backgroundColor="red";
+                      document.getElementById("ta6").style.backgroundColor="red";
+                      document.getElementById("ta9").style.backgroundColor="red";
+                      alert("player2 win");
+                    }
+               else if((g==x)&&(h==x)&&(ii==x))
+                    { 
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                      document.getElementById("ta7").style.backgroundColor="red";
+                      document.getElementById("ta8").style.backgroundColor="red";
+                      document.getElementById("ta9").style.backgroundColor="red";
+                      alert("player2 win");
+                    }
+               else if((a==x)&&(d==x)&&(g==x))
+                    {
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                      document.getElementById("ta1").style.backgroundColor="red";
+                      document.getElementById("ta4").style.backgroundColor="red";
+                      document.getElementById("ta7").style.backgroundColor="red";
+                      alert("player2 win");
+                    }
+               else if((a==x)&&(e==x)&&(ii==x))
+                    {
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                      document.getElementById("ta1").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta9").style.backgroundColor="red";
+                      alert("player2 win");
+                    }
+               else if((c==x)&&(e==x)&&(g==x))
+                    {
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                      document.getElementById("ta3").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta7").style.backgroundColor="red";
+                      alert("player2 win");
+                    }
+               else if((d==x)&&(e==x)&&(f==x))
+                    {
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                      document.f1.t1.value=sum;
+                      document.getElementById("ta4").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta6").style.backgroundColor="red";
+                      alert("player2 win");
+                    }
+               else if((b==x)&&(e==x)&&(h==x))
+                    {
+                      var x=parseInt(document.f1.t2.value);
+                      x=x+1;
+                      document.f1.t2.value=x;
+                      document.getElementById("ta2").style.backgroundColor="red";
+                      document.getElementById("ta5").style.backgroundColor="red";
+                      document.getElementById("ta8").style.backgroundColor="red";
+                      alert("player2 win");
+                    }
+               else if((a==o)&&(b==o)&&(c==o))
+                    {
+                      var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                      document.getElementById("ta1").style.backgroundColor="green";
+                      document.getElementById("ta2").style.backgroundColor="green";
+                      document.getElementById("ta3").style.backgroundColor="green";
+                      alert("player1 win");
+                    }
+                else if((c==o)&&(f==o)&&(ii==o))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                       document.getElementById("ta3").style.backgroundColor="green";
+                      document.getElementById("ta6").style.backgroundColor="green";
+                      document.getElementById("ta9").style.backgroundColor="green";
+                      alert("player1 win");
+                    }
+               else if((g==o)&&(h==o)&&(ii==o))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                        document.getElementById("ta7").style.backgroundColor="green";
+                      document.getElementById("ta8").style.backgroundColor="green";
+                      document.getElementById("ta9").style.backgroundColor="green";
+                      alert("player1 win");
+                    }
+               else if((a==o)&&(d==o)&&(g==o))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                       document.getElementById("ta1").style.backgroundColor="green";
+                      document.getElementById("ta4").style.backgroundColor="green";
+                      document.getElementById("ta7").style.backgroundColor="green";
+                      alert("player1 win");
+                    }
+               else if((a==o)&&(e==o)&&(ii==o))
+                    {
+                      var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                        document.getElementById("ta1").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta9").style.backgroundColor="green";
+                      alert("player1 win");
+                    }
+               else if((c==o)&&(e==o)&&(g==o))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                        document.getElementById("ta3").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta7").style.backgroundColor="green";
+                      alert("player1 win");
+                    }
+               else if((d==o)&&(e==o)&&(f==o))
+                    {
+                       var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                        document.getElementById("ta4").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta6").style.backgroundColor="green";
+                      alert("player1 win");
+                    }
+               else if((b==o)&&(e==o)&&(h==o))
+                    {
+                        var x=parseInt(document.f1.t1.value);
+                      x=x+1;
+                      document.f1.t1.value=x;
+                        document.getElementById("ta2").style.backgroundColor="green";
+                      document.getElementById("ta5").style.backgroundColor="green";
+                      document.getElementById("ta8").style.backgroundColor="green";
+                      alert("player1 win");
+                    }
+                 else
+                   {
+                     y=1;
+                    }
+                 }
+             if(y==0) 
+                return true;
+              else
+                return false;
+            }
+//======================================================================================================================
+       function AI3()
+            {
+               var a,b,c,d,e,f,g,h,ii,y=0;
+                 a=document.f3.ta1.value;
+                 b=document.f3.ta2.value;
+                 c=document.f3.ta3.value;
+                 d=document.f3.ta4.value;
+                 e=document.f3.ta5.value;
+                 f=document.f3.ta6.value;
+                 g=document.f3.ta7.value;
+                 h=document.f3.ta8.value;
+                 ii=document.f3.ta9.value;
+               var len,i,x,o,val;
+                x='X';
+                o='O';
+                len=document.f1.r1.length;
+                for(i=0;i<len;i++)
+                  {
+                    if(document.f1.r1[i].checked==true)
+                      {
+                        var val=document.f1.r1[i].value;
+                        break;
+                      }
+                 }
+                
+              if(val==x)
+                {
+                  if((a==x)&&(b==x)&&(c==x))
+                    {
+                     
+                    }
+                else if((c==x)&&(f==x)&&(ii==x))
+                    {
+                      
+                    }
+               else if((g==x)&&(h==x)&&(ii==x))
+                    { 
+                      
+                    }
+               else if((a==x)&&(d==x)&&(g==x))
+                    {
+                      
+                    }
+               else if((a==x)&&(e==x)&&(ii==x))
+                    {
+                      
+                    }
+               else if((c==x)&&(e==x)&&(g==x))
+                    {
+                      
+                    }
+               else if((d==x)&&(e==x)&&(f==x))
+                    {
+                       
+                    }
+               else if((b==x)&&(e==x)&&(h==x))
+                    {
+                      
+                    }
+               else if((a==o)&&(b==o)&&(c==o))
+                    {
+                      
+                    }
+                else if((c==o)&&(f==o)&&(ii==o))
+                    {
+                       
+                    }
+               else if((g==o)&&(h==o)&&(ii==o))
+                    {
+                       
+                    }
+               else if((a==o)&&(d==o)&&(g==o))
+                    {
+                       
+                    }
+               else if((a==o)&&(e==o)&&(ii==o))
+                    {
+                      
+                    }
+               else if((c==o)&&(e==o)&&(g==o))
+                    {
+                       
+                    }
+               else if((d==o)&&(e==o)&&(f==o))
+                    {
+                       
+                    }
+               else if((b==o)&&(e==o)&&(h==o))
+                    {
+                        
+                    }
+                 else
+                   {
+                     y=1;
+                    }
+              }
+             else
+                 {
+                    if((a==x)&&(b==x)&&(c==x))
+                    {
+                       
+                    }
+                else if((c==x)&&(f==x)&&(ii==x))
+                    {
+                       
+                    }
+               else if((g==x)&&(h==x)&&(ii==x))
+                    {
+                       
+                    }
+               else if((a==x)&&(d==x)&&(g==x))
+                    {
+                       
+                    }
+               else if((a==x)&&(e==x)&&(ii==x))
+                    {
+                       
+                    }
+               else if((c==x)&&(e==x)&&(g==x))
+                    {
+                      
+                    }
+               else if((d==x)&&(e==x)&&(f==x))
+                    {
+                      
+                    }
+               else if((b==x)&&(e==x)&&(h==x))
+                    {
+                      
+                    }
+              else if((a==o)&&(b==o)&&(c==o))
+                    {
+                        
+                    }
+                else if((c==o)&&(f==o)&&(ii==o))
+                    {
+                       
+                    }
+               else if((g==o)&&(h==o)&&(ii==o))
+                    {
+                        
+                    }
+               else if((a==o)&&(d==o)&&(g==o))
+                    {
+                       
+                    }
+               else if((a==o)&&(e==o)&&(ii==o))
+                    {
+                       
+                    }
+               else if((c==o)&&(e==o)&&(g==o))
+                    {
+                       
+                    }
+               else if((d==o)&&(e==o)&&(f==o))
+                    {
+                       
+                    }
+               else if((b==o)&&(e==o)&&(h==o))
+                    {
+                       
+                    }
+                 else
+                   {
+                     y=1;
+                   }
+                 }
+             if(y==0) 
+                return true;
+              else
+                return false;
+            }
+//======================================================================================================================
+      function reset2()
+             {
+                   var len,len1,i,j,x,o,pac,pah,val,val1,cc;
+          x='X';
+          o='O';
+          pac="PAC";
+          pah="PAH";
+          len=document.f1.r1.length;
+          len1=document.f1.r2.length;
+          for(i=0;i<len;i++)
+           {
+             if(document.f1.r1[i].checked==true)
+              {
+                var val=document.f1.r1[i].value;
+                 break;
+              }
+            }  
+              for(j=0;j<len1;j++)
+               {
+                 if(document.f1.r2[j].checked==true)
+                  {
+                     var val1=document.f1.r2[j].value;
+                     break;
+                  }
+               }  
+                 document.f3.ta1.value="";
+                 document.f3.ta2.value="";
+                 document.f3.ta3.value="";
+                 document.f3.ta4.value="";
+                 document.f3.ta5.value="";
+                 document.f3.ta6.value="";
+                 document.f3.ta7.value="";
+                 document.f3.ta8.value="";
+                 document.f3.ta9.value="";
+                 document.getElementById("ta1").style.backgroundColor="white";
+                 document.getElementById("ta2").style.backgroundColor="white";
+                 document.getElementById("ta3").style.backgroundColor="white";
+                 document.getElementById("ta4").style.backgroundColor="white";
+                 document.getElementById("ta5").style.backgroundColor="white";
+                 document.getElementById("ta6").style.backgroundColor="white";
+                 document.getElementById("ta7").style.backgroundColor="white";
+                 document.getElementById("ta8").style.backgroundColor="white";
+                 document.getElementById("ta9").style.backgroundColor="white";
+                 cc=document.f1.c1.value;
+                if((cc==o)&&(val1==pah))
+                    document.f1.r1.value="O";
+                else if((cc==x)&&(val1==pah))
+                  document.f1.r1.value="X";
+              }
+        function reset1()
+             {
+                document.getElementById("rad1").checked=false;
+                document.getElementById("rad2").checked=false;
+                document.getElementById("pac").checked=false;
+                document.getElementById("pah").checked=false;
+                 document.f3.ta1.value="";
+                 document.f3.ta2.value="";
+                 document.f3.ta3.value="";
+                 document.f3.ta4.value="";
+                 document.f3.ta5.value="";
+                 document.f3.ta6.value="";
+                 document.f3.ta7.value="";
+                 document.f3.ta8.value="";
+                 document.f3.ta9.value="";
+                 document.f1.r1.value="";
+                 document.f1.t1.value=0;
+                 document.f1.t2.value=0;
+                 document.f1.t3.value=0;
+                 document.getElementById("pac").disabled=false;
+                 document.getElementById("pah").disabled=false;
+                 document.getElementById("rad1").disabled=false;
+                 document.getElementById("rad2").disabled=false;
+                 document.getElementById("ta1").style.backgroundColor="white";
+                 document.getElementById("ta2").style.backgroundColor="white";
+                 document.getElementById("ta3").style.backgroundColor="white";
+                 document.getElementById("ta4").style.backgroundColor="white";
+                 document.getElementById("ta5").style.backgroundColor="white";
+                 document.getElementById("ta6").style.backgroundColor="white";
+                 document.getElementById("ta7").style.backgroundColor="white";
+                 document.getElementById("ta8").style.backgroundColor="white";
+                 document.getElementById("ta9").style.backgroundColor="white";
+              }
+      function draw()
+             {
+                var a,b,c,d,e,f,g,h,ii;
+                 a=document.f3.ta1.value;
+                 b=document.f3.ta2.value;
+                 c=document.f3.ta3.value;
+                 d=document.f3.ta4.value;
+                 e=document.f3.ta5.value;
+                 f=document.f3.ta6.value;
+                 g=document.f3.ta7.value;
+                 h=document.f3.ta8.value;
+                 ii=document.f3.ta9.value;
+               if((a!="")&&(b!="")&&(c!="")&&(d!="")&&(e!="")&&(f!="")&&(g!="")&&(h!="")&&(ii!=""))
+                      {
+                         alert("Match Draw");
+                          var x=parseInt(document.f1.t3.value);
+                      x=x+1;
+                      document.f1.t3.value=x;
+                      }
+              }
+         function AI1()
+            {
+               var a,b,c,d,e,f,g,h,ii;
+                 a=document.f3.ta1.value;
+                 b=document.f3.ta2.value;
+                 c=document.f3.ta3.value;
+                 d=document.f3.ta4.value;
+                 e=document.f3.ta5.value;
+                 f=document.f3.ta6.value;
+                 g=document.f3.ta7.value;
+                 h=document.f3.ta8.value;
+                 ii=document.f3.ta9.value;
+               var len,i,x,o,val;
+                x='X';
+                o='O';
+                len=document.f1.r1.length;
+                for(i=0;i<len;i++)
+                  {
+                    if(document.f1.r1[i].checked==true)
+                      {
+                        var val=document.f1.r1[i].value;
+                        break;
+                      }
+                 }
+                if(val==x)
+                {
+                if((a=="")&&(b=="")&&(c=="")&&(d=="")&&(e=="")&&(f=="")&&(g=="")&&(h=="")&&(ii!=""))
+                 {
+                     document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+             else  if((a!="")&&(b=="")&&(c=="")&&(d=="")&&(e=="")&&(f=="")&&(g=="")&&(h=="")&&(ii==""))
+                 {
+                    document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+             else  if((a=="")&&(b!="")&&(c=="")&&(d=="")&&(e=="")&&(f=="")&&(g=="")&&(h=="")&&(ii==""))
+                 {
+                    document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+            else  if((a=="")&&(b=="")&&(c!="")&&(d=="")&&(e=="")&&(f=="")&&(g=="")&&(h=="")&&(ii==""))
+                 {
+                    document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+             else if((a=="")&&(b=="")&&(c=="")&&(d!="")&&(e=="")&&(f=="")&&(g=="")&&(h=="")&&(ii==""))
+                 {
+                    document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+             else if((a=="")&&(b=="")&&(c=="")&&(d=="")&&(e!="")&&(f=="")&&(g=="")&&(h=="")&&(ii==""))
+                 {
+                    document.getElementById("ta1").style.color="green";  
+                   document.f3.ta1.value="O";AI();draw();
+                 }
+             else  if((a=="")&&(b=="")&&(c=="")&&(d=="")&&(e=="")&&(f!="")&&(g=="")&&(h=="")&&(ii==""))
+                 {
+                    document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+             else  if((a=="")&&(b=="")&&(c=="")&&(d=="")&&(e=="")&&(f=="")&&(g!="")&&(h=="")&&(ii==""))
+                 {
+                    document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+            else  if((a=="")&&(b=="")&&(c=="")&&(d=="")&&(e=="")&&(f=="")&&(g=="")&&(h!="")&&(ii==""))
+                 {
+                    document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+           else  if((a==o)&&(b==o)&&(c==""))
+              {
+                 document.getElementById("ta3").style.color="green";  
+                 document.f3.ta3.value="O";AI();draw();
+              } 
+          else  if((a==o)&&(e==o)&&(ii==""))
+              {
+                 document.getElementById("ta9").style.color="green";  
+                 document.f3.ta9.value="O";AI();draw();
+              }  
+          else  if((a==o)&&(d==o)&&(g==""))
+              {
+                 document.getElementById("ta7").style.color="green";  
+                 document.f3.ta7.value="O";AI();draw();
+              }  
+         else  if((c==o)&&(b==o)&&(a==""))
+              {
+                 document.getElementById("ta1").style.color="green";  
+                 document.f3.ta1.value="O";AI();draw();
+              }  
+         else   if((c==o)&&(f==o)&&(ii==""))
+              {
+                 document.getElementById("ta9").style.color="green";  
+                 document.f3.ta9.value="O";AI();draw();
+              }  
+          else  if((c==o)&&(e==o)&&(g==""))
+              {
+                 document.getElementById("ta7").style.color="green";  
+                 document.f3.ta7.value="O";AI();draw();
+              }  
+         else  if((g==o)&&(h==o)&&(ii==""))
+              {
+                 document.getElementById("ta9").style.color="green";  
+                 document.f3.ta9.value="O";AI();draw();
+              }  
+         else  if((g==o)&&(d==o)&&(a==""))
+              {
+                 document.getElementById("ta1").style.color="green";  
+                 document.f3.ta1.value="O";AI();draw();
+              }  
+          else  if((g==o)&&(e==o)&&(c==""))
+              {
+                 document.getElementById("ta3").style.color="green";  
+                 document.f3.ta3.value="O";AI();draw();
+              }  
+        else   if((ii==o)&&(h==o)&&(g==""))
+              {
+                 document.getElementById("ta7").style.color="green";  
+                 document.f3.ta7.value="O";AI();draw();
+              }   
+         else  if((ii==o)&&(f==o)&&(c==""))
+              {
+                 document.getElementById("ta3").style.color="green";  
+                 document.f3.ta3.value="O";AI();draw();
+              }  
+           
+        else   if((ii==o)&&(e==o)&&(a==""))
+              {
+                 document.getElementById("ta1").style.color="green";  
+                 document.f3.ta1.value="O";AI();draw();
+              }  
+ 
+        else  if((b==o)&&(e==o)&&(h==""))
+              {
+                 document.getElementById("ta8").style.color="green";  
+                 document.f3.ta8.value="O";AI();draw();
+              }      
+         else  if((d==o)&&(e==o)&&(f==""))
+              {
+                 document.getElementById("ta6").style.color="green";  
+                 document.f3.ta6.value="O";AI();draw();
+              }  
+        else  if((f==o)&&(e==o)&&(d==""))
+              {
+                 document.getElementById("ta4").style.color="green";  
+                 document.f3.ta4.value="O";AI();draw();
+              }  
+        else  if((h==o)&&(e==o)&&(b==""))
+              {
+                 document.getElementById("ta2").style.color="green";  
+                 document.f3.ta2.value="O";AI();draw();
+              } 
+           else  if((a==x)&&(b==x)&&(c==""))
+              {
+                 document.getElementById("ta3").style.color="green";  
+                 document.f3.ta3.value="O";AI();draw();
+              } 
+         else   if((a==x)&&(e==x)&&(ii==""))
+              {
+                 document.getElementById("ta9").style.color="green";  
+                 document.f3.ta9.value="O";AI();draw();
+              }  
+          else  if((a==x)&&(d==x)&&(g==""))
+              {
+                 document.getElementById("ta7").style.color="green";  
+                 document.f3.ta7.value="O";AI();draw();
+              }  
+        else   if((c==x)&&(b==x)&&(a==""))
+              {
+                 document.getElementById("ta1").style.color="green";  
+                 document.f3.ta1.value="O";AI();draw();
+              }  
+          else  if((c==x)&&(f==x)&&(ii==""))
+              {
+                 document.getElementById("ta9").style.color="green";  
+                 document.f3.ta9.value="O";AI();draw();
+              }  
+           else if((c==x)&&(e==x)&&(g==""))
+              {
+                 document.getElementById("ta7").style.color="green";  
+                 document.f3.ta7.value="O";AI();draw();
+              }  
+          else if((g==x)&&(h==x)&&(ii==""))
+              {
+                 document.getElementById("ta9").style.color="green";  
+                 document.f3.ta9.value="O";AI();draw();
+              }  
+          else if((g==x)&&(d==x)&&(a==""))
+              {
+                 document.getElementById("ta1").style.color="green";  
+                 document.f3.ta1.value="O";AI();draw();
+              }  
+          else  if((g==x)&&(e==x)&&(c==""))
+              {
+                 document.getElementById("ta3").style.color="green";  
+                 document.f3.ta3.value="O";AI();draw();
+              }  
+          else if((ii==x)&&(h==x)&&(g==""))
+              {
+                 document.getElementById("ta7").style.color="green";  
+                 document.f3.ta7.value="O";AI();draw();
+              }   
+          else if((ii==x)&&(f==x)&&(c==""))
+              {
+                 document.getElementById("ta3").style.color="green";  
+                 document.f3.ta3.value="O";AI();draw();
+              }  
+           
+          else if((ii==x)&&(e==x)&&(a==""))
+              {
+                 document.getElementById("ta1").style.color="green";  
+                 document.f3.ta1.value="O";AI();draw();
+              }  
+ 
+         else if((b==x)&&(e==x)&&(h==""))
+              {
+                 document.getElementById("ta8").style.color="green";  
+                 document.f3.ta8.value="O";AI();draw();
+              }      
+          else if((d==x)&&(e==x)&&(f==""))
+              {
+                 document.getElementById("ta6").style.color="green";  
+                 document.f3.ta6.value="O";AI();draw();
+              }  
+         else if((f==x)&&(e==x)&&(d==""))
+              {
+                 document.getElementById("ta4").style.color="green";  
+                 document.f3.ta4.value="O";AI();draw();
+              }  
+        else  if((h==x)&&(e==x)&&(b==""))
+              {
+                 document.getElementById("ta2").style.color="green";  
+                 document.f3.ta2.value="O";AI();draw();
+              }  
+           else  if((a==x)&&(c==x)&&(b==""))
+                 {
+                   document.getElementById("ta2").style.color="green";  
+                   document.f3.ta2.value="O";AI();draw();
+                 }
+             else  if((a==x)&&(g==x)&&(d==""))
+                 {
+                   document.getElementById("ta4").style.color="green";  
+                   document.f3.ta4.value="O";AI();draw();
+                 }
+            else  if((a==x)&&(ii==x)&&(e==""))
+                 {
+                   document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+           else   if((c==x)&&(a==x)&&(b==""))
+                 {
+                   document.getElementById("ta2").style.color="green";  
+                   document.f3.ta2.value="O";AI();draw();
+                 }
+             else if((c==x)&&(ii==x)&&(f==""))
+                 {
+                   document.getElementById("ta6").style.color="green";  
+                   document.f3.ta6.value="O";AI();draw();
+                 }
+             else  if((c==x)&&(g==x)&&(e==""))
+                 {
+                   document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+            else  if((ii==x)&&(g==x)&&(h==""))
+                 {
+                   document.getElementById("ta8").style.color="green";  
+                   document.f3.ta8.value="O";AI();draw();
+                 }
+           else   if((ii==x)&&(a==x)&&(e==""))
+                 {
+                   document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+           else  if((ii==x)&&(c==x)&&(f==""))
+                 {
+                   document.getElementById("ta6").style.color="green";  
+                   document.f3.ta6.value="O";AI();draw();
+                 }
+            else  if((g==x)&&(a==x)&&(d==""))
+                 {
+                   document.getElementById("ta4").style.color="green";  
+                   document.f3.ta4.value="O";AI();draw();
+                 }
+            else  if((g==x)&&(c==x)&&(e==""))
+                 {
+                   document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+           else  if((g==x)&&(ii==x)&&(h==""))
+                 {
+                   document.getElementById("ta8").style.color="green";  
+                   document.f3.ta8.value="O";AI();draw();
+                 }
+          else  if((b==x)&&(h==x)&&(e==""))
+              {
+                document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+              }
+          else  if((d==x)&&(f==x)&&(e==""))
+              {
+                document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+              
+               }
+           
+         
+        else
+          {
+              if(b=="")
+                 {
+                     document.getElementById("ta2").style.color="green";  
+                   document.f3.ta2.value="O";AI();draw();
+                 }
+               else if(e=="")
+                 {
+                    document.getElementById("ta5").style.color="green";  
+                   document.f3.ta5.value="O";AI();draw();
+                 }
+               else if(h=="")
+                 {
+                    document.getElementById("ta8").style.color="green";  
+                   document.f3.ta8.value="O";AI();draw();
+                 }
+             else if(a=="")
+                 {
+                    document.getElementById("ta1").style.color="green";  
+                   document.f3.ta1.value="O";AI();draw();
+                 }
+             else if(d=="")
+                 {
+                    document.getElementById("ta4").style.color="green";  
+                   document.f3.ta4.value="O";AI();draw();
+                 }
+             else if(c=="")
+                 {
+                    document.getElementById("ta3").style.color="green";  
+                   document.f3.ta3.value="O";AI();draw();
+                 }
+             else  if(g=="")
+                 {
+                    document.getElementById("ta7").style.color="green";  
+                   document.f3.ta7.value="O";AI();draw();
+                 }
+             else  if(f=="")
+                 {
+                    document.getElementById("ta6").style.color="green";  
+                   document.f3.ta6.value="O";AI();draw();
+                 }
+            else if(ii=="") 
+                 {
+                    document.getElementById("ta9").style.color="green";  
+                   document.f3.ta9.value="O";AI();draw();
+                 }
+             else
+               {
+                  
+                }
+          } 
+ 
+           }
+               else
+                 { 
+                   
+                    if((a=="")&&(b=="")&&(c=="")&&(d=="")&&(e=="")&&(f=="")&&(g=="")&&(h=="")&&(ii!=""))
+                     {
+                       document.getElementById("ta5").style.color="red";  
+                     document.f3.ta5.value="X";AI();draw();
+                     }
+                  else  if((a!="")&&(b=="")&&(c=="")&&(d=="")&&(e=="")&&(f=="")&&(g=="")&&(h=="")&&(ii==""))
+                     {
+                       document.getElementById("ta5").style.color="red";  
+                     document.f3.ta5.value="X";AI();draw();
+                     }
+                  else if((a=="")&&(b!="")&&(c=="")&&(d=="")&&(e=="")&&(f=="")&&(g=="")&&(h=="")&&(ii==""))
+                     {
+                       document.getElementById("ta5").style.color="red";  
+                     document.f3.ta5.value="X";AI();draw();
+                     }
+                 else  if((a=="")&&(b=="")&&(c!="")&&(d=="")&&(e=="")&&(f=="")&&(g=="")&&(h=="")&&(ii==""))
+                     {
+                       document.getElementById("ta5").style.color="red";  
+                     document.f3.ta5.value="X";AI();draw();
+                     } 
+                 else if((a=="")&&(b=="")&&(c=="")&&(d!="")&&(e=="")&&(f=="")&&(g=="")&&(h=="")&&(ii==""))
+                     {
+                       document.getElementById("ta5").style.color="red";  
+                     document.f3.ta5.value="X";AI();draw();
+                     }
+                 else if((a=="")&&(b=="")&&(c=="")&&(d=="")&&(e!="")&&(f=="")&&(g=="")&&(h=="")&&(ii==""))
+                     {
+                       document.getElementById("ta1").style.color="red";  
+                     document.f3.ta1.value="X";AI();draw();
+                     }
+                else if((a=="")&&(b=="")&&(c=="")&&(d=="")&&(e=="")&&(f!="")&&(g=="")&&(h=="")&&(ii==""))
+                     {
+                       document.getElementById("ta5").style.color="red";  
+                     document.f3.ta5.value="X";AI();draw();
+                     }
+              else  if((a=="")&&(b=="")&&(c=="")&&(d=="")&&(e=="")&&(f=="")&&(g!="")&&(h=="")&&(ii==""))
+                     {
+                       document.getElementById("ta5").style.color="red";  
+                     document.f3.ta5.value="X";AI();draw();
+                     }
+            else  if((a=="")&&(b=="")&&(c=="")&&(d=="")&&(e=="")&&(f=="")&&(g=="")&&(h!="")&&(ii==""))
+                     {
+                       document.getElementById("ta5").style.color="red";  
+                     document.f3.ta5.value="X";AI();draw();
+                     }
+      
+             else if((a==x)&&(b==x)&&(c==""))
+              {
+                 document.getElementById("ta3").style.color="red";  
+                 document.f3.ta3.value="X";AI();draw();
+              } 
+       else if((a==x)&&(e==x)&&(ii==""))
+              {
+                 document.getElementById("ta9").style.color="red";  
+                 document.f3.ta9.value="X";AI();draw();
+              }  
+         else   if((a==x)&&(d==x)&&(g==""))
+              {
+                 document.getElementById("ta7").style.color="red";  
+                 document.f3.ta7.value="X";AI();draw();
+              }  
+         else  if((c==x)&&(b==x)&&(a==""))
+              {
+                 document.getElementById("ta1").style.color="red";  
+                 document.f3.ta1.value="X";AI();draw();
+              }  
+          else  if((c==x)&&(f==x)&&(ii==""))
+              {
+                 document.getElementById("ta9").style.color="red";  
+                 document.f3.ta9.value="X";AI();draw();
+              }  
+          else  if((c==x)&&(e==x)&&(g==""))
+              {
+                 document.getElementById("ta7").style.color="red";  
+                 document.f3.ta7.value="X";AI();draw();
+              }  
+         else  if((g==x)&&(h==x)&&(ii==""))
+              {
+                 document.getElementById("ta9").style.color="red";  
+                 document.f3.ta9.value="X";AI();draw();
+              }  
+          else if((g==x)&&(d==x)&&(a==""))
+              {
+                 document.getElementById("ta1").style.color="red";  
+                 document.f3.ta1.value="X";AI();draw();
+              }  
+          else  if((g==x)&&(e==x)&&(c==""))
+              {
+                 document.getElementById("ta3").style.color="red";  
+                 document.f3.ta3.value="X";AI();draw();
+              }  
+         else  if((ii==x)&&(h==x)&&(g==""))
+              {
+                 document.getElementById("ta7").style.color="red";  
+                 document.f3.ta7.value="X";AI();draw();
+              }   
+         else  if((ii==x)&&(f==x)&&(c==""))
+              {
+                 document.getElementById("ta3").style.color="red";  
+                 document.f3.ta3.value="X";AI();draw();
+              }  
+           
+         else  if((ii==x)&&(e==x)&&(a==""))
+              {
+                 document.getElementById("ta1").style.color="red";  
+                 document.f3.ta1.value="X";AI();draw();
+              }  
+ 
+        else  if((b==x)&&(e==x)&&(h==""))
+              {
+                 document.getElementById("ta8").style.color="red";  
+                 document.f3.ta8.value="X";AI();draw();
+              }      
+          else if((d==x)&&(e==x)&&(f==""))
+              {
+                 document.getElementById("ta6").style.color="red";  
+                 document.f3.ta6.value="X";AI();draw();
+              }  
+        else  if((f==x)&&(e==x)&&(d==""))
+              {
+                 document.getElementById("ta4").style.color="red";  
+                 document.f3.ta4.value="X";AI();draw();
+              }  
+        else  if((h==x)&&(e==x)&&(b==""))
+              {
+                 document.getElementById("ta2").style.color="red";  
+                 document.f3.ta2.value="X";AI();draw();
+              }    
+        else   if((a==o)&&(b==o)&&(c==""))
+              {
+                 document.getElementById("ta3").style.color="red";  
+                 document.f3.ta3.value="X";AI();draw();
+              } 
+        else    if((a==o)&&(e==o)&&(ii==""))
+              {
+                 document.getElementById("ta9").style.color="red";  
+                 document.f3.ta9.value="X";AI();draw();
+              }  
+       else    if((a==o)&&(d==o)&&(g==""))
+              {
+                 document.getElementById("ta7").style.color="red";  
+                 document.f3.ta7.value="X";AI();draw();
+              }  
+        else   if((c==o)&&(b==o)&&(a==""))
+              {
+                 document.getElementById("ta1").style.color="red";  
+                 document.f3.ta1.value="X";AI();draw();
+              }  
+         else   if((c==o)&&(f==o)&&(ii==""))
+              {
+                 document.getElementById("ta9").style.color="red";  
+                 document.f3.ta9.value="X";AI();draw();
+              }  
+         else   if((c==o)&&(e==o)&&(g==""))
+              {
+                 document.getElementById("ta7").style.color="red";  
+                 document.f3.ta7.value="X";AI();draw();
+              }  
+        else   if((g==o)&&(h==o)&&(ii==""))
+              {
+                 document.getElementById("ta9").style.color="red";  
+                 document.f3.ta9.value="X";AI();draw();
+              }  
+        else   if((g==o)&&(d==o)&&(a==""))
+              {
+                 document.getElementById("ta1").style.color="red";  
+                 document.f3.ta1.value="X";AI();draw();
+              }  
+        else    if((g==o)&&(e==o)&&(c==""))
+              {
+                 document.getElementById("ta3").style.color="red";  
+                 document.f3.ta3.value="X";AI();draw();
+              }  
+        else   if((ii==o)&&(h==o)&&(g==""))
+              {
+                 document.getElementById("ta7").style.color="red";  
+                 document.f3.ta7.value="X";AI();draw();
+              }   
+         else  if((ii==o)&&(f==o)&&(c==""))
+              {
+                 document.getElementById("ta3").style.color="red";  
+                 document.f3.ta3.value="X";AI();draw();
+              }  
+           
+          else if((ii==o)&&(e==o)&&(a==""))
+              {
+                 document.getElementById("ta1").style.color="red";  
+                 document.f3.ta1.value="X";AI();draw();
+              }  
+ 
+         else if((b==o)&&(e==o)&&(h==""))
+              {
+                 document.getElementById("ta8").style.color="red";  
+                 document.f3.ta8.value="X";AI();draw();
+              }      
+          else if((d==o)&&(e==o)&&(f==""))
+              {
+                 document.getElementById("ta6").style.color="red";  
+                 document.f3.ta6.value="X";AI();draw();
+              }  
+         else if((f==o)&&(e==o)&&(d==""))
+              {
+                 document.getElementById("ta4").style.color="red";  
+                 document.f3.ta4.value="X";AI();draw();
+              }  
+        else  if((h==o)&&(e==o)&&(b==""))
+              {
+                 document.getElementById("ta2").style.color="red";  
+                 document.f3.ta2.value="X";AI();draw();
+              }         
+             else if((a==o)&&(c==o)&&(b==""))
+                 {
+                   document.getElementById("ta2").style.color="red";  
+                   document.f3.ta2.value="X";AI();draw();
+                 }
+            else  if((a==o)&&(g==o)&&(d==""))
+                 {
+                   document.getElementById("ta4").style.color="red";  
+                   document.f3.ta4.value="X";AI();draw();
+                 }
+           else  if((a==o)&&(ii==o)&&(e==""))
+                 {
+                   document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+                 }
+           else   if((c==o)&&(a==o)&&(b==""))
+                 {
+                   document.getElementById("ta2").style.color="red";  
+                   document.f3.ta2.value="X";AI();draw();
+                 }
+           else   if((c==o)&&(ii==o)&&(f==""))
+                 {
+                   document.getElementById("ta6").style.color="red";  
+                   document.f3.ta6.value="X";AI();draw();
+                 }
+         else if((c==o)&&(g==o)&&(e==""))
+                 {
+                   document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+                 }
+           else if((ii==o)&&(g==o)&&(h==""))
+                 {
+                   document.getElementById("ta8").style.color="red";  
+                   document.f3.ta8.value="X";AI();draw();
+                 }
+          else if((ii==o)&&(a==o)&&(e==""))
+                 {
+                   document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+                 }
+          else if((ii==o)&&(c==o)&&(f==""))
+                 {
+                   document.getElementById("ta6").style.color="red";  
+                   document.f3.ta6.value="X";AI();draw();
+                 }
+           else if((g==o)&&(a==o)&&(d==""))
+                 {
+                   document.getElementById("ta4").style.color="red";  
+                   document.f3.ta4.value="X";AI();draw();
+                 }
+           else if((g==o)&&(c==o)&&(e==""))
+                 {
+                   document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+                 }
+            else if((g==o)&&(ii==o)&&(h==""))
+                 {
+                   document.getElementById("ta8").style.color="red";  
+                   document.f3.ta8.value="X";AI();draw();
+                 }
+            else if((b==o)&&(h==o)&&(e==""))
+              {
+                document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+              }
+         else if((d==o)&&(f==o)&&(e==""))
+              {
+                document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+              } 
+        else if((a==x)&&(c==x)&&(b==""))
+                 {
+                   document.getElementById("ta2").style.color="red";  
+                   document.f3.ta2.value="X";AI();draw();
+                 }
+            else if((a==x)&&(g==x)&&(d==""))
+                 {
+                   document.getElementById("ta4").style.color="red";  
+                   document.f3.ta4.value="X";AI();draw();
+                 }
+           else if((a==x)&&(ii==x)&&(e==""))
+                 {
+                   document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+                 }
+           else if((c==x)&&(a==x)&&(b==""))
+                 {
+                   document.getElementById("ta2").style.color="red";  
+                   document.f3.ta2.value="X";AI();draw();
+                 }
+           else if((c==x)&&(ii==x)&&(f==""))
+                 {
+                   document.getElementById("ta6").style.color="red";  
+                   document.f3.ta6.value="X";AI();draw();
+                 }
+          else if((c==x)&&(g==x)&&(e==""))
+                 {
+                   document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+                 }
+           else if((ii==x)&&(g==x)&&(h==""))
+                 {
+                   document.getElementById("ta8").style.color="red";  
+                   document.f3.ta8.value="X";AI();draw();
+                 }
+           else   if((ii==x)&&(a==x)&&(e==""))
+                 {
+                   document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+                 }
+          else   if((ii==x)&&(c==x)&&(f==""))
+                 {
+                   document.getElementById("ta6").style.color="red";  
+                   document.f3.ta6.value="X";AI();draw();
+                 }
+          else    if((g==x)&&(a==x)&&(d==""))
+                 {
+                   document.getElementById("ta4").style.color="red";  
+                   document.f3.ta4.value="XX";AI();draw();
+                 }
+          else    if((g==x)&&(c==x)&&(e==""))
+                 {
+                   document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+                 }
+          else   if((g==x)&&(ii==x)&&(h==""))
+                 {
+                   document.getElementById("ta8").style.color="red";  
+                   document.f3.ta8.value="X";AI();draw();
+                 }
+         else   if((b==x)&&(h==x)&&(e==""))
+              {
+                document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+              }
+         else   if((d==x)&&(f==x)&&(e==""))
+              {
+                document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+              }    
+        
+        else
+          {
+             if(b=="")
+                 {
+                     document.getElementById("ta2").style.color="red";  
+                   document.f3.ta2.value="X";AI();draw();
+                 }
+               else if(e=="")
+                 {
+                    document.getElementById("ta5").style.color="red";  
+                   document.f3.ta5.value="X";AI();draw();
+                 }
+               else if(h=="")
+                 {
+                    document.getElementById("ta8").style.color="red";  
+                   document.f3.ta8.value="X";AI();draw();
+                 }
+             else if(d=="")
+                 {
+                    document.getElementById("ta4").style.color="red";  
+                   document.f3.ta4.value="X";AI();draw();
+                 }
+             else if(a=="")
+                 {
+                    document.getElementById("ta1").style.color="red";  
+                   document.f3.ta1.value="X";AI();draw();
+                 }
+             else if(f=="")
+                 {
+                    document.getElementById("ta6").style.color="red";  
+                   document.f3.ta6.value="X";AI();draw();
+                 }
+             else  if(g=="")
+                 {
+                    document.getElementById("ta7").style.color="red";  
+                   document.f3.ta7.value="X";AI();draw();
+                 }
+             else  if(c=="")
+                 {
+                    document.getElementById("ta3").style.color="red";  
+                   document.f3.ta3.value="X";AI();draw();
+                 }
+            else if(ii=="") 
+                 {
+                    document.getElementById("ta9").style.color="red";  
+                   document.f3.ta9.value="X";AI();draw();
+                 }
+            else
+             {
+               
+              }
+          } 
+          }  
+          
+     } 
+</script>
+</body>
+</html>
+                    
